@@ -1,0 +1,28 @@
+{
+  "name": "eventgenius",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "sync-db": "ts-node src/scripts/syncDatabase.ts",
+    "dev": "nodemon src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js"
+  },
+  "dependencies": {
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "express-ejs-layouts": "^2.5.1",
+    "reflect-metadata": "^0.1.13",
+    "sqlite3": "^5.1.6",
+    "typeorm": "^0.3.12"
+  },
+  "devDependencies": {
+    "@types/ejs": "^3.1.2",
+    "@types/express": "^4.17.17",
+    "@types/express-ejs-layouts": "^2.5.1",
+    "@types/node": "^18.15.10",
+    "nodemon": "^2.0.22",
+    "typescript": "^5.0.2"
+  }
+}
