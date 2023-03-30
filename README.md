@@ -28,7 +28,6 @@ Frontend:
 Database:
 
 - [PostgreSQL](https://www.postgresql.org/)
-
 - [Node.js](https://nodejs.org/en/)
 
 ## Development and testing
