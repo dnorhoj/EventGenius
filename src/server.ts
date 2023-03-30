@@ -1,16 +1,20 @@
 import express from 'express';
 import path from 'path';
 import router from './router';
+import cookieParser from 'cookie-parser';
 import expressLayouts from 'express-ejs-layouts';
 
 import { user } from './middleware/user';
+import { activeUrl } from './middleware/view';
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 // Middleware
-app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(cookieParser());
+app.use(activeUrl);
 app.use(user);
 
 // Views

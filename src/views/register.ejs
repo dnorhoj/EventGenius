@@ -1,3 +1,41 @@
 <%- contentFor('title') %>Register
 <%- contentFor('body') %>
-asd
+<!-- Thin card -->
+<div class="container mx-auto mt-4">
+    <div class="card">
+        <div class="card-header">
+            <h3><b>Register</b></h3>
+        </div>
+        <div class="card-body">
+            <form action="/register" method="POST">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="john@doe.com" required>
+                </div>
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="johndoe" required>
+                </div>
+                <div class="row mb-lg-3">
+                    <div class="col-12 mb-3 col-lg-6 mb-lg-0">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="*******" required>
+                    </div>
+                    <div class="col-12 mb-3 col-lg-6 mb-lg-0">
+                        <label for="passwordConfirm" class="form-label">Confirm Password</label>
+                        <input type="password" class="form-control" id="passwordConfirm" placeholder="*******" name="passwordConfirm"
+                            required>
+                    </div>
+                </div>
+
+                <% if (locals.error) { %>
+                <div class="alert alert-danger" role="alert">
+                    <%- error %>
+                </div>
+                <% } %>
+
+                <button type="submit" class="btn btn-primary">Register</button>
+            </form>
+        </div>
+    </div>
+</div>

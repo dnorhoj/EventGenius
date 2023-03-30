@@ -1,9 +1,20 @@
 import type { Request, Response } from "express";
+import { Session } from "../models/session";
+import { db } from "../database";
 
 export const get = async (req: Request, res: Response) => {
-    if (!res.locals.user) {
-        res.redirect("/");
+    // Check if user is logged in
+    if (!res.locals.session) {
+        return res.redirect("/login");
     }
 
-    // TODO; Log out
+    // Clear cookie
+    res.clearCookie("session");
+
+    // Invalidate session
+    res.locals.session.active = false;
+    await db.getRepository(Session).save(res.locals.session);
+
+    // Redirect to home
+    return res.redirect("/");
 }

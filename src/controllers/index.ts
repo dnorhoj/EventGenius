@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
 import { User } from '../models/user';
-import { AppDataSource } from '../database';
+import { db } from '../database';
 
 
 export const get = async (req: Request, res: Response) => {
@@ -12,5 +12,5 @@ export const get = async (req: Request, res: Response) => {
 
     // await AppDataSource.manager.save(user);
 
-    res.render('index', {user: "dnorhoj"});
+    res.render('index');
 }
