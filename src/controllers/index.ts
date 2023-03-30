@@ -3,7 +3,7 @@ import { User } from '../models/user';
 import { AppDataSource } from '../database';
 
 
-export default async (req: Request, res: Response) => {
+export const get = async (req: Request, res: Response) => {
     // const user = new User();
     // user.name = 'John Doe';
     // user.email = 'test@example.com';
