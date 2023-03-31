@@ -1,0 +1,21 @@
+<%- contentFor('title') %>My Events | EventGenius
+<%- contentFor('body') %>
+<div class="container mt-4">
+    <div class="d-lg-flex justify-content-between align-items-center">
+        <h1>My events</h1>
+        <div>
+            <a class="btn btn-success" href="/my-events/create">
+                Create Event
+            </a>
+        </div>
+    </div>
+
+    <% if (events.length === 0) { %>
+    <div class="alert alert-warning mt-4" role="alert">
+        You have no events yet. Create one now!
+    </div>
+    <% } else { %>
+        
+    <% } %>
+
+</div>

@@ -17,11 +17,8 @@ export const user = async (req: Request, res: Response, next: NextFunction) => {
         relations: ['user']
     });
     
-    if (!session) {
-        return next();
-    }
-
-    if (session.expires_at < new Date()) {
+    if (!session || session.expires_at < new Date()) {
+        res.clearCookie('session');
         return next();
     }
 

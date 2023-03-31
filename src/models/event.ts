@@ -15,6 +15,9 @@ export class Event {
     @Column()
     date: Date;
 
+    @Column()
+    public: boolean;
+
     @ManyToOne(type => User, user => user.createdEvents)
     creator: User;
 
@@ -30,5 +33,17 @@ export class Event {
     constructor() {
         this.created_at = new Date();
         this.updated_at = new Date();
+    }
+
+    static create(name: string, description: string, date: Date, _public: boolean, creator: User) {
+        const event = new Event();
+
+        event.name = name;
+        event.description = description;
+        event.date = date;
+        event.public = _public;
+        event.creator = creator;
+
+        return event;
     }
 }

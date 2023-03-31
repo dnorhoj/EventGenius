@@ -30,7 +30,7 @@
                             <a class="nav-link<%= active('/') %>" href="/">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link<%= active('/events') %>" href="/events">Events</a>
+                            <a class="nav-link<%= active('/events(\/.*)?') %>" href="/events">Events</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto">
@@ -51,11 +51,12 @@
                                     <path
                                         d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
                                 </svg>
-                                <%= user.username %>
+                                <%= user.name %>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="/user/settings">Settings</a></li>
-                                <li><a class="dropdown-item" href="/user/events">My Events</a></li>
+                                <li><a class="dropdown-item" href="/user/<%= user.username %>">Profile</a></li>
+                                <li><a class="dropdown-item" href="/user-settings">Settings</a></li>
+                                <li><a class="dropdown-item" href="/my-events">My Events</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">

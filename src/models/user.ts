@@ -10,6 +10,9 @@ export class User {
     username: string;
 
     @Column()
+    name: string;
+
+    @Column()
     email: string;
 
     @Column()
@@ -35,12 +38,14 @@ export class User {
 
     static create(
         username: string,
+        name: string,
         email: string,
         password: string,
     ) {
         const user = new User();
 
         user.username = username;
+        user.name = name;
         user.email = email;
         user.password = password;
 

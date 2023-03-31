@@ -15,6 +15,7 @@ export const get = async (req: Request, res: Response) => {
 
 const registerSchema = object({
     email: string().email("Please enter a valid email!").required("Email is required"),
+    name: string().required("Name is required"),
     username: string().required("Username is required"),
     password: string().required("Password is required"),
     passwordConfirm: string().oneOf([ref('password')], "Passwords don't match").required()
@@ -56,6 +57,7 @@ export const post = async (req: Request, res: Response) => {
     // Create user
     const newUser = User.create(
         registerForm.username,
+        registerForm.name,
         registerForm.email,
         hashedPassword
     );
