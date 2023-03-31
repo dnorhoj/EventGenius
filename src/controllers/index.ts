@@ -1,9 +1,9 @@
-import type { Request, Response } from 'express';
+import type { RequestHandler } from 'express';
 import { User } from '../models/user';
 import { db } from '../database';
 
 
-export const get = async (req: Request, res: Response) => {
+export const get: RequestHandler = async (req, res) => {
     // const user = new User();
     // user.name = 'John Doe';
     // user.email = 'test@example.com';

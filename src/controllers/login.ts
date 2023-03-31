@@ -1,11 +1,11 @@
-import type { Request, Response } from 'express';
+import type { RequestHandler } from 'express';
 import { ValidationError, object, string } from 'yup';
 import { compare } from 'bcrypt';
 import { User } from '../models/user';
 import { Session } from '../models/session';
 import { db } from '../database';
 
-export const get = async (req: Request, res: Response) => {
+export const get: RequestHandler = async (req, res) => {
     if (res.locals.user) {
         res.redirect('/');
     }
@@ -18,7 +18,7 @@ const loginSchema = object({
     password: string().required("Password is required")
 });
 
-export const post = async (req: Request, res: Response) => {
+export const post: RequestHandler = async (req, res) => {
     if (res.locals.user) {
         res.redirect('/');
     }

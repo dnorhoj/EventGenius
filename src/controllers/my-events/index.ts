@@ -9,7 +9,7 @@ export const get: RequestHandler = async (req, res) => {
     }
 
     const user = res.locals.user as User;
-    const events = await db.getRepository(Event).find({ where: { creator: user } });
+    const events = await db.getRepository(Event).find({ where: { organizer: user } });
 
     res.render('my-events/index', { events });
 }

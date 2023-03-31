@@ -1,8 +1,8 @@
-import { Request, Response, NextFunction } from 'express';
+import { RequestHandler } from 'express';
 import { Session } from '../models/session';
 import { db } from '../database';
 
-export const user = async (req: Request, res: Response, next: NextFunction) => {
+export const user: RequestHandler = async (req, res, next) => {
     const token = req.cookies.session;
 
     if (!token) {

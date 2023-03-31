@@ -10,7 +10,7 @@
             integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
             crossorigin="anonymous"></script>
         <link rel="icon" href="/images/eg-nobg.svg">
-        <title><%- title %></title>
+        <title><%- title %> | EventGenius</title>
     </head>
 
     <body>
@@ -43,7 +43,7 @@
                         </li>
                         <% } else { %>
                         <!-- User dropdown -->
-                        <li class="nav-item dropdown me-2">
+                        <li class="nav-item me-1 dropdown">
                             <a class="btn btn-outline-success dropdown-toggle" href="#" id="navbarDropdown"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -53,14 +53,16 @@
                                 </svg>
                                 <%= user.name %>
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="/my-events">My Events</a></li>
+                                <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="/user/<%= user.username %>">Profile</a></li>
                                 <li><a class="dropdown-item" href="/user-settings">Settings</a></li>
-                                <li><a class="dropdown-item" href="/my-events">My Events</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-danger" href="/logout">Logout</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-danger" href="/logout">Logout</a>
                         </li>
                         <% } %>
                     </ul>
@@ -68,6 +70,7 @@
             </div>
         </nav>
 
+        <!-- Body goes here -->
         <%- body %>
     </body>
 </html>

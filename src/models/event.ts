@@ -1,5 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, CreateDateColumn, UpdateDateColumn, Repository } from 'typeorm';
+import { randomUUID } from 'crypto';
 import { User } from './user';
+import { EventUser } from './event-user';
 
 @Entity()
 export class Event {
@@ -7,10 +9,16 @@ export class Event {
     id: number;
 
     @Column()
+    uuid: string;
+
+    @Column()
     name: string;
 
     @Column()
     description: string;
+    
+    @Column()
+    location: string;
 
     @Column()
     date: Date;
@@ -19,31 +27,18 @@ export class Event {
     public: boolean;
 
     @ManyToOne(type => User, user => user.createdEvents)
-    creator: User;
+    organizer: User;
 
-    @ManyToMany(type => User, user => user.events)
-    attendees: User[];
+    @OneToMany(type => EventUser, user => user.event)
+    attendees: EventUser[];
 
-    @Column()
+    @CreateDateColumn()
     created_at: Date;
 
-    @Column()
+    @UpdateDateColumn()
     updated_at: Date;
 
-    constructor() {
-        this.created_at = new Date();
-        this.updated_at = new Date();
-    }
-
-    static create(name: string, description: string, date: Date, _public: boolean, creator: User) {
-        const event = new Event();
-
-        event.name = name;
-        event.description = description;
-        event.date = date;
-        event.public = _public;
-        event.creator = creator;
-
-        return event;
+    static generateUUID() {
+        return randomUUID();
     }
 }

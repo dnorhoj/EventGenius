@@ -1,8 +1,8 @@
 import { DataSource } from "typeorm";
 
 export const db = new DataSource({
-    type: 'sqlite',
-    database: 'database.sqlite',
+    type: 'postgres',
+    url: process.env.DATABASE_URL,
     synchronize: true,
     logging: process.env.DEBUG === 'true',
     entities: [

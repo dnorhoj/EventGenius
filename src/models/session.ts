@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, OneToMany, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn } from 'typeorm';
 import { User } from './user';
 import { randomBytes } from 'crypto';
 
@@ -16,14 +16,13 @@ export class Session {
     @Column()
     active: boolean = true;
 
-    @Column()
+    @CreateDateColumn()
     created_at: Date;
 
     @Column()
     expires_at: Date;
 
     constructor() {
-        this.created_at = new Date();
         this.expires_at = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days
     }
 

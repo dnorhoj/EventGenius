@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { Event } from './event';
+import { EventUser } from './event-user';
 
 @Entity()
 export class User {
@@ -18,23 +19,17 @@ export class User {
     @Column()
     password: string;
 
-    @ManyToMany(type => Event, event => event.attendees)
-    @JoinTable()
-    events: Event[];
+    @OneToMany(type => EventUser, event => event.user)
+    events: EventUser[];
 
-    @OneToMany(type => Event, event => event.creator)
+    @OneToMany(type => Event, event => event.organizer)
     createdEvents: Event[];
 
-    @Column()
+    @CreateDateColumn()
     created_at: Date;
 
-    @Column()
+    @UpdateDateColumn()
     updated_at: Date;
-
-    constructor() {
-        this.created_at = new Date();
-        this.updated_at = new Date();
-    }
 
     static create(
         username: string,
