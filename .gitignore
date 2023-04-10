@@ -3,3 +3,4 @@ dist/
 database.sqlite
 .hypothesis/
 .env
+cdn/

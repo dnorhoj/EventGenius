@@ -8,8 +8,22 @@ export const get: RequestHandler = async (req, res) => {
         return res.redirect('/login');
     }
 
-    const user = res.locals.user as User;
-    const events = await db.getRepository(Event).find({ where: { organizer: user } });
+    const user = res.locals.user;
 
-    res.render('my-events/index', { events });
+    // Get all user's events with the number of attendees
+    const events = await db.getRepository(Event).createQueryBuilder('event')
+        .leftJoin('event.organizer', 'organizer')
+        .loadRelationCountAndMap('event.attendeeCount', 'event.attendees')
+        .where('event.organizerId = :organizerId', { organizerId: user.id })
+        .orderBy('event.date', 'ASC')
+        .getMany();
+    
+    // Check if there are any events
+    const anyEvents = events.length > 0;
+
+    // Filter events into upcoming and past events
+    const upcomingEvents = events.filter(event => event.date >= new Date());
+    const pastEvents = events.filter(event => event.date < new Date());
+
+    res.render('my-events/index', { anyEvents, upcomingEvents, pastEvents });
 }

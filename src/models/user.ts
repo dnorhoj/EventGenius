@@ -1,6 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToOne } from 'typeorm';
 import { Event } from './event';
 import { EventUser } from './event-user';
+import { Follow } from './follow';
+import { File } from "./file";
+import { db } from '../database';
 
 @Entity()
 export class User {
@@ -19,11 +22,20 @@ export class User {
     @Column()
     password: string;
 
+    @OneToMany(type => Follow, follow => follow.follower)
+    following: Follow[];
+
+    @OneToMany(type => Follow, follow => follow.following)
+    followers: Follow[];
+
     @OneToMany(type => EventUser, event => event.user)
-    events: EventUser[];
+    attendingEvents: EventUser[];
 
     @OneToMany(type => Event, event => event.organizer)
     createdEvents: Event[];
+
+    @ManyToOne(type => File)
+    profilePicture?: File;
 
     @CreateDateColumn()
     created_at: Date;
@@ -45,5 +57,39 @@ export class User {
         user.password = password;
 
         return user;
+    }
+
+    async getFollowerCount() {
+        if (this.followers) {
+            return this.followers.length;
+        }
+
+        // If the followers property is not set, we need to fetch it from the database
+        return await db.getRepository(Follow).count({
+            where: {
+                following: { id: this.id }
+            }
+        })
+    }
+
+    async getFollowingCount() {
+        if (this.following) {
+            return this.following.length;
+        }
+
+        // If the following property is not set, we need to fetch it from the database
+        return await db.getRepository(Follow).count({
+            where: {
+                follower: { id: this.id }
+            }
+        })
+    }
+
+    getPfpUrl() {
+        if (this.profilePicture) {
+            return `/cdn/${this.profilePicture.identifier}`;
+        }
+
+        return "/images/no-pfp.png";
     }
 }

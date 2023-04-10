@@ -17,6 +17,10 @@ const port = process.env.PORT || 3000;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
+
+// CDN route
+app.get('/cdn/:id', require('./controllers/cdn').get);
+
 app.use(activeUrl);
 app.use(user);
 

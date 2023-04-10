@@ -8,7 +8,7 @@ export class Event {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({ unique: true })
     uuid: string;
 
     @Column()
@@ -16,8 +16,8 @@ export class Event {
 
     @Column()
     description: string;
-    
-    @Column()
+
+    @Column({ nullable: true })
     location: string;
 
     @Column()

@@ -1,0 +1,75 @@
+<%- contentFor('title') %>Upcoming events
+<%- contentFor('body') %>
+<div class="container mt-4">
+    <div class="d-lg-flex justify-content-between">
+        <h1>Upcoming Events</h1>
+
+        <div>
+            <div class="input-group mt-3 mt-lg-0">
+                <input type="text" class="form-control" placeholder="Search..." aria-label="Search for events"
+                    aria-describedby="search-button">
+                <button class="btn btn-success" type="button" id="search-button">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <h4 class="mt-4">Following</h4>
+
+    <% if (followingEvents.length === 0) { %>
+    <div class="alert alert-info">
+        You are not following any users. Follow some users to get a curated feed.
+    </div>
+    <% } else { %>
+    <div class="row">
+        <% for (const event of followingEvents) { %>
+        <div class="col-lg-4 p-2">
+            <div class="card shadow-sm">
+                <div class="card-body position-relative">
+                    <h5 class="card-title flex-grow-1"><%= event.name %></h5>
+                    <h6 class="card-subtitle mb-2 text-muted">
+                        <a href="/user/<%= event.organizer.username %>" class="link-secondary text-decoration-none">@<%= event.organizer.username %></a>
+                    </h6>
+                    <h6 class="card-subtitle mb-2 text-muted" data-time><%= event.date.toISOString() %></h6>
+                    <p class="card-text"><%= shorten(event.description, 50) %></p>
+                    <div class="d-flex justify-content-between align-items-end">
+                        <a href="/events/<%= event.uuid %>" class="btn btn-success">Read more</a>
+                        <div class="badge text-bg-secondary user-select-none" data-bs-toggle="tooltip"
+                            data-bs-title="Attendees">
+                            <i class="bi bi-person"></i><%= event.attendeeCount %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% } %>
+    </div>
+    <% } %>
+
+    <h4 class="mt-4">Popular events</h4>
+
+    <div class="row">
+        <% for (const event of popularEvents) { %>
+        <div class="col-lg-4 p-2">
+            <div class="card shadow-sm">
+                <div class="card-body position-relative">
+                    <h5 class="card-title flex-grow-1"><%= event.name %></h5>
+                    <h6 class="card-subtitle mb-2 text-muted">
+                        <a href="/user/<%= event.organizer.username %>" class="link-secondary text-decoration-none">@<%= event.organizer.username %></a>
+                    </h6>
+                    <h6 class="card-subtitle mb-2 text-muted" data-time><%= event.date.toISOString() %></h6>
+                    <p class="card-text"><%= shorten(event.description, 50) %></p>
+                    <div class="d-flex justify-content-between align-items-end">
+                        <a href="/events/<%= event.uuid %>" class="btn btn-success">Read more</a>
+                        <div class="badge text-bg-secondary user-select-none" data-bs-toggle="tooltip"
+                            data-bs-title="Attendees">
+                            <i class="bi bi-person"></i><%= event.attendeeCount %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% } %>
+    </div>
+</div>

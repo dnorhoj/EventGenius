@@ -9,5 +9,13 @@ export const activeUrl: RequestHandler = (req, res, next) => {
         const re = new RegExp(`^${page}[\/]?$`);
         return re.test(req.path) ? ' active' : '';
     };
+
+    // Shorten text to a certain length
+    res.locals.shorten = (text: string, length: number) => {
+        if (text.length > length) {
+            return text.substring(0, length - 3) + '...';
+        }
+        return text;
+    }
     next();
 }

@@ -1,6 +1,50 @@
 <%- contentFor('title') %><%= targetUser.name %> (@<%= targetUser.username %>)
 <%- contentFor('body') %>
-<div class="container mt-4">
-    <h4>Profile for <b><%= targetUser.name %></b></h4>
-    <p class="small text-muted">@<%= targetUser.username %></p>
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-end">
+            <div class="position-relative">
+                <img src="<%= targetUser.getPfpUrl() %>" alt="Avatar" class="rounded-circle shadow-sm" height="100"
+                    width="100" draggable="false" id="pfp-img">
+
+                <!-- Only show the edit button if the user is viewing their own profile -->
+                <% if (targetUser.id === user.id) { %>
+                <form action="/user/<%= targetUser.username %>/pfp" method="POST" enctype="multipart/form-data"
+                    class="position-absolute bottom-0 end-0">
+                    <input type="file" name="pfp" id="pfp" class="d-none" accept="image/*">
+                    <label for="pfp" class="btn btn-success btn-sm rounded-circle" data-bs-toggle="tooltip"
+                        data-bs-title="Change profile picture">
+                        <i class="bi bi-camera"></i>
+                    </label>
+                </form>
+                <% } %>
+            </div>
+            <div class="ms-3">
+                <h4 class="mb-0"><b><%= targetUser.name %></b></h4>
+                <p class="small text-muted">@<%= targetUser.username %></p>
+            </div>
+        </div>
+        <% if (targetUser.id !== user.id) { %>
+        <form action="/user/<%= targetUser.username %>/follow" method="POST">
+            <% if (!isFollowing) { %>
+            <input type="hidden" name="type" value="follow" />
+            <button type="submit" class="btn btn-success">
+                <i class="bi bi-person-plus"></i>
+                Follow
+            </button>
+            <% } else { %>
+            <input type="hidden" name="type" value="unfollow" />
+            <button type="submit" class="btn btn-outline-danger">
+                <i class="bi bi-person-dash"></i>
+                Unfollow
+            </button>
+            <% } %>
+        </form>
+        <% } %>
+    </div>
+    <hr>
+    <h4>Attending</h4>
+    <hr>
+    <h4>Events</h4>
 </div>
+<script src="/js/user/user.js"></script>

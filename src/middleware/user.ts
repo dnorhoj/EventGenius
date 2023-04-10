@@ -9,14 +9,17 @@ export const user: RequestHandler = async (req, res, next) => {
         return next();
     }
 
+    // Get user with profile picture from session token
     const session = await db.getRepository(Session).findOne({
         where: {
             token,
             active: true
         },
-        relations: ['user']
+        relations: {
+            user: { profilePicture: true }
+        }
     });
-    
+
     if (!session || session.expires_at < new Date()) {
         res.clearCookie('session');
         return next();

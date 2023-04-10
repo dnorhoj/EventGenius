@@ -3,40 +3,48 @@
 <div class="container mt-4">
     <div class="card">
         <div class="card-header">
+            <% if (locals.event) { %>
+            <h3><b>Edit event</b></h3>
+            <% } else { %>
             <h3><b>Create event</b></h3>
+            <% } %>
         </div>
         <div class="card-body">
-            <form method="POST">
+            <form method="POST" action="/my-events/create">
+                <% if (locals.event?.id) { %>
+                <input type="hidden" name="id" value="<%= locals.event.uuid %>">
+                <% } %>
+
                 <div class="mb-3">
                     <label for="name" class="form-label">Name</label>
                     <input type="text" class="form-control" id="name" name="name" placeholder="Party at my place!"
-                        required value="<%= locals.form?.name %>">
+                        required value="<%= locals.event?.name %>">
                 </div>
                 <div class="mb-3">
                     <label for="description" class="form-label">Description</label>
                     <textarea class="form-control" id="description" name="description" rows="3"
                         placeholder="Come over and have a good time!"
-                        required><%= locals.form?.description %></textarea>
+                        required><%= locals.event?.description %></textarea>
                 </div>
                 <div class="mb-3">
                     <label for="location" class="form-label">Location</label>
                     <textarea class="form-control" id="location" name="location" rows="3"
                         placeholder="Nyvej 124&#10;4. sal, tv.&#10;1159 København"
-                        required><%= locals.form?.location %></textarea>
+                        required><%= locals.event?.location %></textarea>
                     <div class="form-check form-switch">
                         <label for="noLocation" class="form-check-label">No location</label>
                         <input class="form-check-input" type="checkbox" id="noLocation" value="true" name="noLocation"
-                            <%= locals.form?.noLocation ? 'checked' : '' %>>
+                            <%= locals.event?.noLocation ? 'checked' : '' %>>
                     </div>
                 </div>
                 <div class="mb-3">
                     <label for="date" class="form-label">Date and time</label>
                     <input type="datetime-local" class="form-control" id="date" name="date" required
-                        value="<%= locals.form?.date %>">
+                        value="<%= locals.event?.date.toISOString() %>">
                 </div>
                 <div class="form-check form-switch mb-3">
                     <input class="form-check-input" type="checkbox" id="public" value="true" name="public"
-                        <%= locals.form?.public ? 'checked' : '' %>>
+                        <%= locals.event?.public ? 'checked' : '' %>>
                     <label class="form-check-label" for="public">Public</label>
                 </div>
 
@@ -46,7 +54,11 @@
                 </div>
                 <% } %>
 
-                <button type="submit" class="btn btn-primary">Login</button>
+                <% if (locals.event) { %>
+                <button type="submit" class="btn btn-success">Edit</button>
+                <% } else { %>
+                <button type="submit" class="btn btn-success">Create</button>
+                <% } %>
             </form>
         </div>
     </div>
