@@ -1,16 +1,16 @@
 import type { RequestHandler } from 'express';
 import { object, string, ref, ValidationError } from 'yup';
-import { User } from '../models/user';
-import { db } from '../database';
+import { User } from '../../models/user';
+import { db } from '../../database';
 import bcrypt from 'bcrypt';
-import { Session } from '../models/session';
+import { Session } from '../../models/session';
 
 export const get: RequestHandler = async (req, res) => {
 	if (res.locals.user) {
 		res.redirect('/');
 	}
 
-	res.render('register');
+	res.render('auth/register');
 }
 
 const registerSchema = object({
@@ -47,7 +47,7 @@ export const post: RequestHandler = async (req, res) => {
 		registerForm = await registerSchema.validate(req.body);
 	} catch (error) {
 		if (error instanceof ValidationError) {
-			return res.render('register', { error: error.message });
+			return res.render('auth/register', { error: error.message });
 		}
 
 		return res.status(500).send("Something went wrong!")
@@ -62,7 +62,7 @@ export const post: RequestHandler = async (req, res) => {
 	});
 
 	if (user) {
-		return res.render('register', { error: 'User with that email or username already exists!' });
+		return res.render('auth/register', { error: 'User with that email or username already exists!' });
 	}
 
 	// Hash password with bcrypt (10 salt rounds)

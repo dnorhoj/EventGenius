@@ -11,7 +11,9 @@ export const get: RequestHandler = async (req, res) => {
 
     const event = await db.getRepository(Event).findOne({
         where: { uuid: req.params.id },
-        relations: ['organizer', 'organizer.profilePicture']
+        relations: {
+            organizer: { profilePicture: true }
+        }
     });
 
     if (!event) {
@@ -33,8 +35,6 @@ export const get: RequestHandler = async (req, res) => {
         [EventUserStatus.MAYBE]: '0',
         [EventUserStatus.NOT_GOING]: '0',
     });
-
-    console.log(attendeeCount)
 
     // Get user's status for this event
     const eventUser = await db.getRepository(EventUser).findOne({

@@ -1,7 +1,7 @@
 <%- contentFor('title') %>Register
 <%- contentFor('body') %>
 <!-- Thin card -->
-<div class="container mx-auto mt-4">
+<div class="container mt-4">
     <div class="card">
         <div class="card-header">
             <h3><b>Register</b></h3>
@@ -39,9 +39,9 @@
                 </div>
 
                 <% if (locals.error) { %>
-                <div class="alert alert-danger" role="alert">
-                    <%- error %>
-                </div>
+                    <div class="alert alert-danger" role="alert">
+                        <%- error %>
+                    </div>
                 <% } %>
 
                 <button type="submit" class="btn btn-primary">Register</button>

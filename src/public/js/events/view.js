@@ -10,7 +10,7 @@
     }
 
     // Add listeners
-    document.getElementById('resp-yes').addEventListener('click', respond('yes'));
+    document.getElementById('resp-yes').addEventListener('click', respond('going'));
     document.getElementById('resp-maybe').addEventListener('click', respond('maybe'));
-    document.getElementById('resp-no').addEventListener('click', respond('no'));
+    document.getElementById('resp-no').addEventListener('click', respond('not_going'));
 })();

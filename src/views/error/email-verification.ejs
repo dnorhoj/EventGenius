@@ -1,0 +1,24 @@
+<%- contentFor('title') %>Email verification
+<%- contentFor('body') %>
+<div class="container mt-4">
+    <% if (resent) { %>
+        <div class="alert alert-success" role="alert">
+            We have resent you an email with a verification link.
+        </div>
+    <% } %>
+    <div class="card">
+        <div class="card-header">
+            <h3><b>Email verification</b></h3>
+        </div>
+        <div class="card-body">
+            <p>
+                You need to verify your email before you can use your account.<br>
+                We have sent you an email with a verification link. Please click on the link to verify your email.
+            </p>
+            <p class="text-muted">
+                If you did not receive an email, please check your spam folder. If you still cannot find the email,
+                you can <a href="/resend-verification-email">resend the verification email</a>.
+            </p>
+        </div>
+    </div>
+</div>

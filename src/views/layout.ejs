@@ -42,37 +42,37 @@
                     </ul>
                     <ul class="navbar-nav ms-auto">
                         <% if (!locals.user) { %>
-                        <li class="nav-item">
-                            <a class="nav-link<%= active('/login') %>" href="/login">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link<%= active('/register') %>" href="/register">Register</a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link<%= active('/login') %>" href="/login">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link<%= active('/register') %>" href="/register">Register</a>
+                            </li>
                         <% } else { %>
-                        <!-- User dropdown -->
-                        <li class="nav-item me-1 dropdown">
-                            <a class="nav-link btn-outline-success dropdown-toggle" href="#" id="navbarDropdown"
-                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <!-- <i class="bi bi-person-fill"></i> -->
-                                <img src="<%= user.getPfpUrl() %>" alt="Avatar" class="rounded-circle" height="30"
-                                    width="30">
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <li>
-                                    <h6 class="dropdown-header"><%= user.name %></h6>
-                                </li>
-                                <li><a class="dropdown-item" href="/my-events">My Events</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="/user/<%= user.username %>">Profile</a></li>
-                                <li><a class="dropdown-item" href="/user-settings">Settings</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item text-danger" href="/logout">Logout</a></li>
-                            </ul>
-                        </li>
+                            <!-- User dropdown -->
+                            <li class="nav-item me-1 dropdown">
+                                <a class="nav-link btn-outline-success dropdown-toggle" href="#" id="navbarDropdown"
+                                    role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <!-- <i class="bi bi-person-fill"></i> -->
+                                    <img src="<%= user.getPfpUrl() %>" alt="Avatar" class="rounded-circle" height="30"
+                                        width="30">
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <li>
+                                        <h6 class="dropdown-header"><%= user.name %></h6>
+                                    </li>
+                                    <li><a class="dropdown-item" href="/my-events">My Events</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="/user/<%= user.username %>">Profile</a></li>
+                                    <li><a class="dropdown-item" href="/user-settings">Settings</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item text-danger" href="/logout">Logout</a></li>
+                                </ul>
+                            </li>
                         <% } %>
                     </ul>
                 </div>

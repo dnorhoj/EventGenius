@@ -1,7 +1,7 @@
 import type { RequestHandler } from "express";
-import { User } from "../../models/user";
 import { Event } from "../../models/event";
 import { db } from "../../database";
+import { EventUserStatus } from "../../models/event-user";
 
 export const get: RequestHandler = async (req, res) => {
     if (!res.locals.user) {
@@ -11,11 +11,8 @@ export const get: RequestHandler = async (req, res) => {
     const user = res.locals.user;
 
     // Get all user's events with the number of attendees
-    const events = await db.getRepository(Event).createQueryBuilder('event')
-        .leftJoin('event.organizer', 'organizer')
-        .loadRelationCountAndMap('event.attendeeCount', 'event.attendees')
-        .where('event.organizerId = :organizerId', { organizerId: user.id })
-        .orderBy('event.date', 'ASC')
+    const events = await Event.cardSelectBuilder()
+        .where("organizer.id = :organizerId", { organizerId: user.id })
         .getMany();
     
     // Check if there are any events

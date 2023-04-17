@@ -1,9 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
 import { Event } from './event';
 import { EventUser } from './event-user';
 import { Follow } from './follow';
 import { File } from "./file";
 import { db } from '../database';
+import { randomUUID } from 'crypto';
 
 @Entity()
 export class User {
@@ -16,7 +17,10 @@ export class User {
     @Column()
     name: string;
 
-    @Column()
+    @Column({ type: "text", nullable: true })
+    bio: string | null;
+
+    @Column({ unique: true })
     email: string;
 
     @Column()
@@ -35,13 +39,19 @@ export class User {
     createdEvents: Event[];
 
     @ManyToOne(type => File)
-    profilePicture?: File;
+    profilePicture: File | null;
 
     @CreateDateColumn()
     created_at: Date;
 
     @UpdateDateColumn()
     updated_at: Date;
+
+    @Column()
+    emailVerified: boolean = false;
+
+    @Column({ type: 'text', unique: true, nullable: true })
+    emailVerificationToken: string | null;
 
     static create(
         username: string,
@@ -55,6 +65,8 @@ export class User {
         user.name = name;
         user.email = email;
         user.password = password;
+
+        user.emailVerificationToken = randomUUID();
 
         return user;
     }

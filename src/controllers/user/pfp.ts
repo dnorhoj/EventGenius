@@ -19,7 +19,11 @@ export const post: RequestHandler = async (req, res) => {
     // Remove old profile picture if it exists
     if (res.locals.user.profilePicture) {
         try {
-            await db.getRepository(File).delete(res.locals.user.profilePicture);
+            await db.getRepository(User).save({
+                id: res.locals.user.id,
+                profilePicture: null
+            })
+            await db.getRepository(File).delete({ id: res.locals.user.profilePicture.id });
             await deleteFile(res.locals.user.profilePicture);
         } catch (err) {
             res.render('error/error', {

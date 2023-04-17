@@ -1,12 +1,17 @@
 <%- contentFor('title') %>Login
 <%- contentFor('body') %>
 <!-- Thin card -->
-<div class="container mx-auto mt-4">
+<div class="container mt-4">
     <div class="card">
         <div class="card-header">
             <h3><b>Login</b></h3>
         </div>
         <div class="card-body">
+            <% if (locals.message) { %>
+                <div class="alert alert-success" role="alert">
+                    <%- message %>
+                </div>
+            <% } %>
             <form action="/login" method="POST">
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>
@@ -17,12 +22,13 @@
                     <label for="password" class="form-label">Password</label>
                     <input type="password" class="form-control" id="password" name="password" placeholder="*******"
                         required>
+                    <a href="/forgot-password" class="text-decoration-none">Forgot password?</a>
                 </div>
 
                 <% if (locals.error) { %>
-                <div class="alert alert-danger" role="alert">
-                    <%- error %>
-                </div>
+                    <div class="alert alert-danger" role="alert">
+                        <%- error %>
+                    </div>
                 <% } %>
 
                 <button type="submit" class="btn btn-primary">Login</button>

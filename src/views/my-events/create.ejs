@@ -1,18 +1,18 @@
-<%- contentFor('title') %>Create Event
+<%- contentFor('title') %><% if (!locals.event) { %>Create Event<% } else { %>Edit Event<% } %>
 <%- contentFor('body') %>
 <div class="container mt-4">
     <div class="card">
         <div class="card-header">
             <% if (locals.event) { %>
-            <h3><b>Edit event</b></h3>
+                <h3><b>Edit event</b></h3>
             <% } else { %>
-            <h3><b>Create event</b></h3>
+                <h3><b>Create event</b></h3>
             <% } %>
         </div>
         <div class="card-body">
             <form method="POST" action="/my-events/create">
                 <% if (locals.event?.id) { %>
-                <input type="hidden" name="id" value="<%= locals.event.uuid %>">
+                    <input type="hidden" name="id" value="<%= locals.event.uuid %>">
                 <% } %>
 
                 <div class="mb-3">
@@ -49,15 +49,15 @@
                 </div>
 
                 <% if (locals.error) { %>
-                <div class="alert alert-danger" role="alert">
-                    <%- error %>
-                </div>
+                    <div class="alert alert-danger" role="alert">
+                        <%- error %>
+                    </div>
                 <% } %>
 
                 <% if (locals.event) { %>
-                <button type="submit" class="btn btn-success">Edit</button>
+                    <button type="submit" class="btn btn-success">Edit</button>
                 <% } else { %>
-                <button type="submit" class="btn btn-success">Create</button>
+                    <button type="submit" class="btn btn-success">Create</button>
                 <% } %>
             </form>
         </div>

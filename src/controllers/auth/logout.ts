@@ -1,11 +1,11 @@
 import type { RequestHandler } from "express";
-import { db } from "../database";
-import { Session } from "../models/session";
+import { db } from "../../database";
+import { Session } from "../../models/session";
 
 export const get: RequestHandler = async (req, res) => {
     // Check if user is logged in
     if (!res.locals.session) {
-        return res.redirect("/login");
+        return res.redirect("/");
     }
 
     // Clear cookie

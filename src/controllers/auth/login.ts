@@ -1,16 +1,18 @@
 import type { RequestHandler } from 'express';
 import { ValidationError, object, string } from 'yup';
 import { compare } from 'bcrypt';
-import { User } from '../models/user';
-import { Session } from '../models/session';
-import { db } from '../database';
+import { User } from '../../models/user';
+import { Session } from '../../models/session';
+import { db } from '../../database';
 
 export const get: RequestHandler = async (req, res) => {
     if (res.locals.user) {
         res.redirect('/');
     }
 
-    res.render('login');
+    const message = req.query.msg;
+
+    res.render('auth/login', { message });
 }
 
 const loginSchema = object({
@@ -20,7 +22,7 @@ const loginSchema = object({
 
 export const post: RequestHandler = async (req, res) => {
     if (res.locals.user) {
-        res.redirect('/');
+        return res.redirect('/');
     }
 
     let loginForm;
@@ -28,7 +30,7 @@ export const post: RequestHandler = async (req, res) => {
         loginForm = await loginSchema.validate(req.body);
     } catch (error) {
         if (error instanceof ValidationError) {
-            return res.render('login', { error: error.message });
+            return res.render('auth/login', { error: error.message });
         }
 
         return res.status(500).send("Something went wrong!")
@@ -41,13 +43,13 @@ export const post: RequestHandler = async (req, res) => {
     });
 
     if (!user) {
-        return res.render('login', { error: 'Invalid username or password!' });
+        return res.render('auth/login', { error: 'Invalid username or password!' });
     }
 
     const passwordMatch = await compare(loginForm.password, user.password);
 
     if (!passwordMatch) {
-        return res.render('login', { error: 'Invalid username or password!' });
+        return res.render('auth/login', { error: 'Invalid username or password!' });
     }
 
     const session = Session.create(user.id);

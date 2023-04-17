@@ -21,13 +21,14 @@ app.use(cookieParser());
 // CDN route
 app.get('/cdn/:id', require('./controllers/cdn').get);
 
-app.use(activeUrl);
-app.use(user);
-
 // Views
 app.set('views', path.join(__dirname, 'views/'))
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
+
+// Custom middleware
+app.use(activeUrl);
+app.use(user);
 
 // Routes
 router(app);

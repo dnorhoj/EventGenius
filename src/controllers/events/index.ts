@@ -1,6 +1,7 @@
 import type { RequestHandler } from "express";
 import { db } from "../../database";
 import { Event } from "../../models/event";
+import { EventUserStatus } from "../../models/event-user";
 
 export const get: RequestHandler = async (req, res) => {
     if (!res.locals.user) {
@@ -8,36 +9,34 @@ export const get: RequestHandler = async (req, res) => {
         return;
     }
 
-    // Get events created by users the current user is following
-    const followingEvents = await db.getRepository(Event)
-        .createQueryBuilder("event")
-        .innerJoinAndSelect("event.organizer", "organizer")
-        .innerJoinAndSelect("organizer.followers", "follower")
-        .loadRelationCountAndMap("event.attendeeCount", "event.attendees")
-        .where("follower.followerId = :id", { id: res.locals.user.id })
-        .andWhere("event.date > :date", { date: new Date() })
-        .orderBy("event.date", "ASC")
-        .limit(5)
-        .getMany();
-    
-    // Get popular events
-    const popularEvents = await db.getRepository(Event)
-        .createQueryBuilder("event")
-        .leftJoinAndSelect("event.attendees", "attendee")
-        .loadRelationCountAndMap("event.attendeeCount", "event.attendees")
-        .leftJoinAndSelect("event.organizer", "organizer")
-        .addSelect("COUNT(attendee.id)", "attendeeCount")
-        .where("event.public = true")
-        .andWhere("event.date > :date", { date: new Date() })
-        .groupBy("event.id")
-        .addGroupBy("organizer.id")
-        .addGroupBy("attendee.id")
-        .limit(5)
-        .getMany();
+    let search = req.query.q as string | undefined;
 
-    res.render("events/index", { followingEvents, popularEvents });
-}
+    let followingEvents, popularEvents, searchEvents;
+    if (!search) {
+        // Get events created by users the current user is following
+        followingEvents = await Event.cardSelectBuilder()
+            .innerJoinAndSelect("organizer.followers", "follower")
+            .andWhere("follower.followerId = :userId", { userId: res.locals.user.id })
+            .addGroupBy("follower.id")
+            .limit(5)
+            .getMany();
 
-export const post: RequestHandler = (req, res) => {
-    res.render("events/index");
+
+        // Get popular events
+        popularEvents = await Event.cardSelectBuilder()
+            .limit(5)
+            .getMany();
+    } else {
+        // Escape LIKE characters
+        search = search.replace(/[_%]/g, "\\$&");
+
+        // Search by query
+        searchEvents = await Event.cardSelectBuilder()
+            .andWhere("(event.name ILIKE :search OR event.description ILIKE :search)", { search: `%${search}%` })
+            .limit(20)
+            .getMany();
+    }
+
+
+    res.render("events/index", { followingEvents, popularEvents, searchEvents });
 }

@@ -2,70 +2,101 @@
 <%- contentFor('body') %>
 <div class="container mt-4">
     <h1><%= event.name %></h1>
-    <div class="d-flex justify-content-between gap-4">
+    <div class="d-flex flex-column-reverse flex-lg-row mt-4 mt-lg-0 justify-content-between gap-4">
         <div class="flex-grow-1">
             <hr class="mt-0">
             <!-- Description -->
             <h4>Description</h4>
             <p>
                 <% for (const line of event.description.split("\n")) { %>
-                <%= line %><br>
+                    <%= line %><br>
                 <% } %>
             </p>
-            <!-- Date -->
         </div>
-        <div class="d-flex flex-column gap-2">
+        <div class="d-flex col-12 col-lg-3 flex-column gap-2">
             <div class="card">
                 <div class="card-header">
                     Overview
                 </div>
                 <div class="card-body">
+                    <!-- Organizer info -->
                     <span class="d-block"><b>Organizer</b></span>
-                    <a href="/user/<%= event.organizer.username %>" class="text-decoration-none text-black">
-                        <%= event.organizer.name %>
-                        <span class="small d-block text-secondary text-decoration-underline">
-                            @<%= event.organizer.username %>
-                        </span>
-                    </a>
+                    <div class="d-flex align-items-center">
+                        <img src="<%= event.organizer.getPfpUrl() %>" class="rounded-circle me-2" width="48" height="48">
+                        <a href="/user/<%= event.organizer.username %>" class="text-decoration-none text-black">
+                            <%= event.organizer.name %>
+                            <span class="small d-block text-secondary text-decoration-underline">
+                                @<%= event.organizer.username %>
+                            </span>
+                        </a>
+                    </div>
                     <hr>
+                    <!-- Date info -->
                     <span class="d-block"><b>Date</b></span>
                     <span class="d-block" data-time><%= event.date.toISOString() %></span>
+                    <!-- Event info -->
                     <% if (event.location) { %>
-                    <hr>
-                    <span class="d-block"><b>Location</b></span>
-                    <span class="d-block">
-                        <!-- Preserve newlines in location -->
-                        <% for (const line of event.location.split("\n")) { %>
-                        <%= line %><br>
-                        <% } %>
-                    </span>
+                        <hr>
+                        <span class="d-block"><b>Location</b></span>
+                        <span class="d-block">
+                            <!-- Preserve newlines in location -->
+                            <% for (const line of event.location.split("\n")) { %>
+                                <%= line %><br>
+                            <% } %>
+                        </span>
                     <% } %>
+                    <!-- Attendees info -->
                     <hr>
                     <span class="d-block"><b>Attendees</b></span>
-                    <span class="d-block">
-                        <span class="badge bg-success me-1">Yes</span>
-                        <span class="badge bg-secondary me-1">Maybe</span>
-                        <span class="badge bg-danger me-1">No</span>
-                    </span>
+                    <div class="d-flex flex-row flex-lg-column gap-1">
+                        <span class="d-block badge text-bg-success">Going: <%= attendeeCount.going %></span>
+                        <span class="d-block badge text-bg-secondary">Maybe: <%= attendeeCount.maybe %></span>
+                        <span class="d-block badge text-bg-danger">Not Going: <%= attendeeCount.not_going %></span>
+                    </div>
                 </div>
             </div>
             <% if (event.organizer.id !== user.id) { %>
-            <div class="card">
-                <div class="card-header">
-                    Attending
+                <!-- User response -->
+                <div class="card">
+                    <div class="card-header">
+                        Attending
+                    </div>
+                    <div class="card-body">
+                        <span style="max-width: 20vw;">Are you coming to "<%= event.name %>"?</span>
+                        <form class="mt-3" action="/events/<%= event.uuid %>/respond" method="POST">
+                            <input type="hidden" name="response" id="resp-input">
+                            <div class="btn-group w-100">
+                                <% if (userStatus === "going") { %>
+                                    <button class="btn btn-success" id="resp-yes">Yes</button>
+                                <% } else { %>
+                                    <button class="btn btn-outline-success" id="resp-yes">Yes</button>
+                                <% } %>
+
+                                <% if (userStatus === "maybe") { %>
+                                    <button class="btn btn-secondary" id="resp-maybe">Maybe</button>
+                                <% } else { %>
+                                    <button class="btn btn-outline-secondary" id="resp-maybe">Maybe</button>
+                                <% } %>
+
+                                <% if (userStatus === "not_going") { %>
+                                    <button class="btn btn-danger" id="resp-no">No</button>
+                                <% } else { %>
+                                    <button class="btn btn-outline-danger" id="resp-no">No</button>
+                                <% } %>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <span style="max-width: 20vw;">Are you coming to "<%= event.name %>"?</span>
-                    <form class="mt-3" action="/events/<%= event.uuid %>/respond" method="POST">
-                        <input type="hidden" name="response" id="resp-input">
-                        <div class="btn-group w-100">
-                            <button class="btn btn-outline-success" id="resp-yes">Yes</button>
-                            <button class="btn btn-outline-secondary" id="resp-maybe">Maybe</button>
-                            <button class="btn btn-outline-danger" id="resp-no">No</button>
-                        </div>
-                    </form>
+            <% } else { %>
+                <!-- For event owner; manage -->
+                <div class="card">
+                    <div class="card-header">
+                        Manage
+                    </div>
+                    <div class="card-body">
+                        <a href="/my-events/edit/<%= event.uuid %>" class="btn btn-sm btn-outline-success w-100">Edit</a>
+                    </div>
                 </div>
-            </div>
             <% } %>
         </div>
     </div>

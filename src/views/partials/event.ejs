@@ -1,0 +1,28 @@
+<div class="col-lg-4 p-2">
+    <div class="card shadow-sm">
+        <div class="card-body position-relative">
+            <% if (!event.public) { %>
+                <span class="badge bg-secondary m-2 position-absolute top-0 end-0" data-bs-title="Private"
+                    data-bs-toggle="tooltip">
+                    <i class="bi bi-eye-slash"></i>
+                </span>
+            <% } %>
+            <h5 class="card-title flex-grow-1"><%= event.name %></h5>
+            <% if (event.organizer) { %>
+                <h6 class="card-subtitle mb-2 text-muted">
+                    <a href="/user/<%= event.organizer.username %>"
+                        class="link-secondary text-decoration-none">@<%= event.organizer.username %></a>
+                </h6>
+            <% } %>
+            <h6 class="card-subtitle mb-2 text-muted" data-time><%= event.date.toISOString() %></h6>
+            <p class="card-text"><%= shorten(event.description, 100) %></p>
+            <div class="d-flex justify-content-between align-items-end">
+                <a href="/events/<%= event.uuid %>" class="btn btn-success">Read more</a>
+                <div class="badge text-bg-secondary user-select-none" data-bs-toggle="tooltip"
+                    data-bs-title="Attendees">
+                    <i class="bi bi-person"></i><%= event.attendeeCount %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
