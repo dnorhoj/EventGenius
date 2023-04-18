@@ -1,19 +1,13 @@
-FROM node:19.6-alpine as build
+FROM node:19.6-alpine
 
 WORKDIR /app
+
+COPY package*.json .
 
 COPY . .
 
-RUN npm install
-RUN npm run build
-
-FROM node:19.6-alpine
-
-COPY --from=build /app/dist /app
-
-WORKDIR /app
-
-RUN npm install --omit=dev
+RUN npm i
+RUN npm i -g ts-node
 
 EXPOSE 3000
 

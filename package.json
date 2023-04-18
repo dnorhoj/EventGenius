@@ -6,9 +6,8 @@
   "scripts": {
     "sync-db": "ts-node src/scripts/syncDatabase.ts",
     "dev": "nodemon src/server.ts",
-    "build": "./build.sh",
     "start": "node dist/server.js",
-    "start:prod": "NODE_ENV=production node server.js"
+    "start:prod": "NODE_ENV=production ts-node --transpile-only src/server.ts"
   },
   "dependencies": {
     "bcrypt": "^5.1.0",

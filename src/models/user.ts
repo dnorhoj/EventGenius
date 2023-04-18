@@ -47,8 +47,8 @@ export class User {
     @UpdateDateColumn()
     updated_at: Date;
 
-    @Column()
-    emailVerified: boolean = false;
+    @Column({ default: false })
+    emailVerified: boolean;
 
     @Column({ type: 'text', unique: true, nullable: true })
     emailVerificationToken: string | null;
