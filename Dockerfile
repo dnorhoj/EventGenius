@@ -2,7 +2,7 @@ FROM node:19.6-alpine
 
 WORKDIR /app
 
-COPY package*.json .
+COPY package*.json ./
 
 COPY . .
 

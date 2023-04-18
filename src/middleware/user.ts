@@ -36,6 +36,7 @@ export const user: RequestHandler = async (req, res, next) => {
             /\/login/,
             /\/register/,
             /\/resend-verification-email/,
+            /\/user-settings/,
             /\/verify\/.*/
         ];
 

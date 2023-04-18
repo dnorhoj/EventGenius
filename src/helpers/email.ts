@@ -46,10 +46,10 @@ const sendMail = async (to: User, subject: string, html: string) => {
 
 // Exported functions to send emails
 
-export const sendVerificationEmail = async (to: User, token: string) => {
+export const sendVerificationEmail = async (to: User) => {
     const html = await compileView('verify-email', {
         name: to.name,
-        verificationLink: `${siteUrl}/verify/${token}`
+        verificationLink: `${siteUrl}/verify/${to.emailVerificationToken}`
     });
     return sendMail(to, 'Verify your email', html);
 }

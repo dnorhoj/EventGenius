@@ -83,7 +83,7 @@ export const post: RequestHandler = async (req, res) => {
             });
 
             // Send verification email
-            await sendVerificationEmail(editedUser, verificationToken);
+            sendVerificationEmail(editedUser);
         }
 
         // Update user

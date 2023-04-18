@@ -24,7 +24,7 @@
                 <div class="card-body">
                     <!-- Organizer info -->
                     <span class="d-block"><b>Organizer</b></span>
-                    <div class="d-flex align-items-center">
+                    <div class="d-flex align-items-center mt-2">
                         <img src="<%= event.organizer.getPfpUrl() %>" class="rounded-circle me-2" width="48" height="48">
                         <a href="/user/<%= event.organizer.username %>" class="text-decoration-none text-black">
                             <%= event.organizer.name %>
@@ -51,7 +51,7 @@
                     <!-- Attendees info -->
                     <hr>
                     <span class="d-block"><b>Attendees</b></span>
-                    <div class="d-flex flex-row flex-lg-column gap-1">
+                    <div class="d-flex flex-row flex-lg-column gap-1 mt-2">
                         <span class="d-block badge text-bg-success">Going: <%= attendeeCount.going %></span>
                         <span class="d-block badge text-bg-secondary">Maybe: <%= attendeeCount.maybe %></span>
                         <span class="d-block badge text-bg-danger">Not Going: <%= attendeeCount.not_going %></span>

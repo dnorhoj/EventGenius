@@ -17,12 +17,12 @@ export const get: RequestHandler = async (req, res) => {
 
     const token = randomUUID();
 
-    await db.getRepository(User).save({
+    const editedUser = await db.getRepository(User).save({
         id: res.locals.user.id,
         emailVerificationToken: token
     });
 
-    await sendVerificationEmail(res.locals.user, token);
+    sendVerificationEmail(editedUser);
 
     res.redirect(`/?resent=true`);
 }

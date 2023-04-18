@@ -4,6 +4,7 @@ import { User } from '../../models/user';
 import { db } from '../../database';
 import bcrypt from 'bcrypt';
 import { Session } from '../../models/session';
+import { sendVerificationEmail } from '../../helpers/email';
 
 export const get: RequestHandler = async (req, res) => {
 	if (res.locals.user) {
@@ -86,6 +87,9 @@ export const post: RequestHandler = async (req, res) => {
 		httpOnly: true,
 		maxAge: 1000 * 60 * 60 * 24 * 7 // 7 days
 	});
+
+	// Send verification email
+	sendVerificationEmail(createdUser);
 
 	res.redirect('/');
 }
