@@ -4,10 +4,11 @@ WORKDIR /app
 
 COPY package*.json ./
 
-COPY . .
 
 RUN npm i
 RUN npm i -g ts-node
+
+COPY . .
 
 EXPOSE 3000
 

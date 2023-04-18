@@ -34,14 +34,18 @@ const transporter = createTransport({
 
 // Non-exported function to send emails
 const sendMail = async (to: User, subject: string, html: string) => {
-    const info = await transporter.sendMail({
-        from: `"EventGenius" <${transporter.options.sender}>`,
-        to: `"${to.name}" <${to.email}>`,
-        subject,
-        html
-    });
+    try {
+        const info = await transporter.sendMail({
+            from: `"EventGenius" <${transporter.options.sender}>`,
+            to: `"${to.name}" <${to.email}>`,
+            subject,
+            html
+        });
 
-    return info;
+        return info;
+    } catch (error) {
+        console.error("Error sending email", error);
+    }
 };
 
 // Exported functions to send emails
