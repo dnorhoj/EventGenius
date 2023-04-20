@@ -7,6 +7,7 @@ import type { User } from '../models/user';
 const viewsDir = join(__dirname, '..', 'views', 'emails');
 const siteUrl = process.env.SITE_URL || 'http://localhost:3000';
 
+// Comiles an ejs template and returns the html
 const compileView = async (template: string, data?: any) => {
     if (!existsSync(join(viewsDir, template + '.ejs'))) {
         throw new Error(`Email template ${template} does not exist`);
