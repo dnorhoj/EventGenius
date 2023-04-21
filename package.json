@@ -4,7 +4,6 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "sync-db": "ts-node src/scripts/syncDatabase.ts",
     "dev": "nodemon src/server.ts",
     "start": "node dist/server.js",
     "start:prod": "NODE_ENV=production ts-node --transpile-only src/server.ts"

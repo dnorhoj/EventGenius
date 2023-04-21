@@ -32,6 +32,7 @@ export default (app: Application) => {
     app.get('/events', require('./controllers/events/index').get);
     app.get('/events/:id', require('./controllers/events/view').get);
     app.post('/events/:id/respond', require('./controllers/events/respond').post);
+    app.post('/events/:id/delete', require('./controllers/events/delete').post);
 
     // My events
     app.get('/my-events', require('./controllers/my-events/index').get);

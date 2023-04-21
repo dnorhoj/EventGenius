@@ -33,11 +33,10 @@ export const user: RequestHandler = async (req, res, next) => {
     if (!session.user.emailVerified) {
         // Check if user is trying to access a page that doesn't require email verification
         const allowedPaths = [
-            /\/login/,
-            /\/register/,
             /\/resend-verification-email/,
             /\/user-settings/,
-            /\/verify\/.*/
+            /\/verify\/.*/,
+            /\/logout/
         ];
 
         if (allowedPaths.some(path => path.test(req.path))) {

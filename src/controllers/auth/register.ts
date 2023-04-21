@@ -48,7 +48,7 @@ export const post: RequestHandler = async (req, res) => {
 		registerForm = await registerSchema.validate(req.body);
 	} catch (error) {
 		if (error instanceof ValidationError) {
-			return res.render('auth/register', { error: error.message });
+			return res.render('auth/register', { error: error.message, form: req.body });
 		}
 
 		return res.status(500).send("Something went wrong!")
@@ -63,7 +63,7 @@ export const post: RequestHandler = async (req, res) => {
 	});
 
 	if (user) {
-		return res.render('auth/register', { error: 'User with that email or username already exists!' });
+		return res.render('auth/register', { error: 'User with that email or username already exists!', form: req.body });
 	}
 
 	// Hash password with bcrypt (10 salt rounds)

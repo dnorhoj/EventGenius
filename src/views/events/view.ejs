@@ -98,6 +98,9 @@
                     </div>
                     <div class="card-body">
                         <a href="/my-events/edit/<%= event.uuid %>" class="btn btn-sm btn-outline-success w-100">Edit</a>
+                        <form action="/events/<%= event.uuid %>/delete" class="mt-2" method="POST">
+                            <button type="submit" class="btn btn-sm btn-outline-danger w-100">Delete</button>
+                        </form>
                     </div>
                 </div>
             <% } %>

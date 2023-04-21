@@ -16,6 +16,12 @@ export const post: RequestHandler = async (req, res) => {
         })
     }
 
+    if (!req.file?.size || req.file.size > 1024 * 1024 * 5) {
+        return res.render('error/error', {
+            error: 'File is too large! The max size is 5MB'
+        })
+    }
+
     // Remove old profile picture if it exists
     if (res.locals.user.profilePicture) {
         try {
