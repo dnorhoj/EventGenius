@@ -22,7 +22,10 @@ export const get: RequestHandler = async (req, res) => {
         emailVerificationToken: token
     });
 
-    sendVerificationEmail(editedUser);
+    // Merge edited user with the current user
+    Object.assign(res.locals.user, editedUser);
+
+    sendVerificationEmail(res.locals.user);
 
     res.redirect(`/?resent=true`);
 }
