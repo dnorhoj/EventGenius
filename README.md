@@ -18,7 +18,6 @@ Backend:
 - [Express](https://expressjs.com/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [TypeORM](https://typeorm.io/#/)
-- [Passport](http://www.passportjs.org/)
 
 Frontend:
 
@@ -38,6 +37,22 @@ Database:
 - [Docker Compose](https://docs.docker.com/compose/)
 
 ### Running the application
+
+First, you need some environment variables that the program needs in order to function. Create a file called `.env` with the following content:
+
+```
+DATABASE_URL=postgres://postgres:postgres@localhost:5432/postgres
+
+MAIL_HOST=
+MAIL_USER=
+MAIL_PASS=
+MAIL_PORT=
+MAIL_FROM=
+
+SITE_URL=http://localhost:3000
+```
+
+You should fill out the SMTP information so that the program knows how to send emails.
 
 To run the application, simply run the following command:
 
